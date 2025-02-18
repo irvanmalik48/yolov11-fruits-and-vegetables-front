@@ -10,7 +10,12 @@ export default function Header() {
       <div className="flex items-center justify-between w-full max-w-4xl mx-auto">
         <div className="flex items-center gap-3">
           <ArienneLogo className="w-8 h-8" />
-          <h1 className="w-full text-xl font-medium">Project Arienne</h1>
+          <div className="flex flex-col line-clamp-1">
+            <h1 className="w-full text-xl font-medium">Project Arienne</h1>
+            <p className="w-full text-xs text-muted-foreground line-clamp-1">
+              YOLOv11 Fruits & Vegetables Classification
+            </p>
+          </div>
         </div>
         <button
           className="p-2 border-border bg-background rounded-full hover:bg-secondary transition-colors"
