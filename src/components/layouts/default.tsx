@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
+import Header from "../custom/header";
 
 type HeadProps = {
   title: string;
@@ -14,12 +15,12 @@ type DefaultLayoutProps = {
 };
 
 const geistSans = Geist({
-  variable: "--font-sans",
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-mono",
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -45,6 +46,7 @@ export default function DefaultLayout({ children, head }: DefaultLayoutProps) {
         <meta name="twitter:image" content={head.ogImage} />
       </Head>
       <main className="w-full min-h-screen" id="ROOT_NODE">
+        <Header />
         {children}
       </main>
     </div>
