@@ -41,7 +41,7 @@ export default function DefaultLayout({ children, head }: DefaultLayoutProps) {
         <meta property="og:image" content={head.ogImage} />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:creator" content="@geekyants" />
+        <meta name="twitter:creator" content="@irvanmalik48" />
         <meta name="twitter:title" content={head.title} />
         <meta name="twitter:description" content={head.description} />
         <meta name="twitter:image" content={head.ogImage} />
