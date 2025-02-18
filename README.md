@@ -1,3 +1,32 @@
-# YOLOv11 Fruits and Vegetables Classification Frontend
+# Project Arienne
 
-**Codename**: Arienne
+A YOLOv11 Fruits and Vegetables Classification Frontend repository.
+Made to satisfy my final thesis assessment.
+
+## Running on local
+
+1. Clone this repo:
+
+```bash
+git clone https://github.com/irvanmalik48/arienne
+```
+
+2. Install dependencies:
+
+I use `pnpm` for the package management and advise you to do so as well.
+But this advice is more of an optional errand rather than a mandatory one
+so use whatever package management you desire.
+
+```bash
+pnpm install
+```
+
+3. Running dev server:
+
+```bash
+pnpm run dev
+```
+
+## License
+
+All rights reserved.
