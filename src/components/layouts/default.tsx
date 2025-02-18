@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Header from "../custom/header";
+import Footer from "../custom/footer";
 
 type HeadProps = {
   title: string;
@@ -45,9 +46,10 @@ export default function DefaultLayout({ children, head }: DefaultLayoutProps) {
         <meta name="twitter:description" content={head.description} />
         <meta name="twitter:image" content={head.ogImage} />
       </Head>
-      <main className="w-full min-h-screen" id="ROOT_NODE">
+      <main className="w-full min-h-screen flex flex-col" id="ROOT_NODE">
         <Header />
         {children}
+        <Footer />
       </main>
     </div>
   );
