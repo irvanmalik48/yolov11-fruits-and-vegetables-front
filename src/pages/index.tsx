@@ -6,9 +6,9 @@ export default function Home() {
     <DefaultLayout
       head={{ title: "Project Arienne", description: "Veritae veritatum" }}
     >
-      <div className="w-full p-5">
-        <div className="mx-auto w-full max-w-4xl">
-          <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-5">
+      <div className="w-full flex flex-col flex-1 items-center justify-center">
+        <div className="mx-auto w-full border-x flex-1 flex flex-col border-border h-full max-w-5xl p-5">
+          <div className="w-full grid md:grid-cols-2 flex-1 items-center justify-center grid-cols-1 gap-5">
             <CameraView />
           </div>
         </div>
