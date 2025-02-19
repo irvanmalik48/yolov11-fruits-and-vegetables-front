@@ -1,5 +1,5 @@
 import { useTheme } from "next-themes";
-import { Moon, Sun, SunMoon } from "lucide-react";
+import { SunMoon } from "lucide-react";
 import ArienneLogo from "../svg/arienne-logo";
 
 export default function Header() {
