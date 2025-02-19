@@ -87,7 +87,7 @@ export default function CameraView() {
           </button>
         </div>
       </div>
-      <div className="w-full flex h-[583.33px] flex-col gap-3">
+      <div className="w-full flex h-[639.984px] flex-col gap-3">
         <h2 className="w-full flex items-center justify-center md:justify-start gap-3 text-lg font-medium text-foreground">
           <Stars className="w-6 h-6" />
           <span>Predicted Results</span>
