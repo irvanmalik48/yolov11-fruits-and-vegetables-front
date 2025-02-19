@@ -14,7 +14,7 @@ export default function CameraView() {
   const cameraRef = useRef(null);
   const [numberOfCameras, setNumberOfCameras] = useState(0);
   const [image, setImage] = useState<Result[]>([]);
-  const [parent, enableAnimations] = useAutoAnimate();
+  const [parent, _enableAnimations] = useAutoAnimate();
 
   useEffect(() => {
     const resultsLocalStorage = localStorage.getItem("results");
