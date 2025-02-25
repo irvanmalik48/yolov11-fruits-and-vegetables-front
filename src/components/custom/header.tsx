@@ -14,7 +14,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 bg-background/50 backdrop-blur-lg z-[999] w-full border-b border-border">
-      <div className="flex items-center justify-between w-full max-w-5xl mx-auto px-5 py-3 border-x border-border">
+      <div className="flex items-center justify-between w-full max-w-5xl mx-auto px-5 py-3 md:border-x border-border">
         <div className="flex items-center gap-3">
           <ArienneLogo className="w-8 h-8" />
           <div className="flex flex-col line-clamp-1">
