@@ -1,7 +1,8 @@
 import { useTheme } from "next-themes";
-import { Info, Menu, SunMoon } from "lucide-react";
-import ArienneLogo from "../svg/arienne-logo";
+import { Info, SunMoon } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import LogoUnsri from "@/assets/logounsri.png";
 import {
   Tooltip,
   TooltipContent,
@@ -16,11 +17,13 @@ export default function Header() {
     <header className="sticky top-0 bg-background/50 backdrop-blur-lg z-[999] w-full border-b border-border">
       <div className="flex items-center justify-between w-full max-w-5xl mx-auto px-5 py-3 md:border-x border-border">
         <div className="flex items-center gap-3">
-          <ArienneLogo className="w-8 h-8" />
+          <Image src={LogoUnsri} className="w-auto h-12" alt="Logo Unsri" />
           <div className="flex flex-col line-clamp-1">
-            <h1 className="w-full text-xl font-medium">Project Arienne</h1>
-            <p className="w-full text-xs text-muted-foreground line-clamp-1">
+            <h1 className="w-full text-xl font-medium line-clamp-1">
               YOLOv11 Fruits & Vegetables Classification
+            </h1>
+            <p className="w-full text-xs text-muted-foreground line-clamp-1">
+              Universitas Sriwijaya
             </p>
           </div>
         </div>

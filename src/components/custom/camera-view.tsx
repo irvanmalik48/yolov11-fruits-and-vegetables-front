@@ -1,8 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { Camera } from "react-camera-pro";
-import { Camera as CameraLucide, Stars, SwitchCamera, X } from "lucide-react";
+import {
+  Camera as CameraLucide,
+  FileUp,
+  Stars,
+  SwitchCamera,
+  X,
+} from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { dataURLtoFile } from "@/lib/utils";
 
 type Result = {
   id: string;
@@ -11,10 +18,12 @@ type Result = {
 };
 
 export default function CameraView() {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef(null);
   const [numberOfCameras, setNumberOfCameras] = useState(0);
   const [image, setImage] = useState<Result[]>([]);
   const [parent, _enableAnimations] = useAutoAnimate();
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     const resultsLocalStorage = localStorage.getItem("results");
@@ -45,35 +54,54 @@ export default function CameraView() {
             <span className="font-semibold">{numberOfCameras}</span>
           </p>
         </div>
-        <div className="absolute bottom-0 left-0 w-full bg-transparent gap-3 grid grid-cols-2 bg-opacity-50 p-3">
+        <div className="absolute bottom-0 left-0 w-full bg-transparent gap-3 grid grid-cols-3 bg-opacity-50 p-3">
           <button
             className="w-full bg-background/90 dark:bg-background/50 hover:bg-primary dark:hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors backdrop-blur-lg border border-border flex justify-center gap-3 items-center text-foreground rounded-md py-2 text-sm"
-            onClick={() => {
+            onClick={async () => {
               // @ts-expect-error
               const photo = cameraRef?.current?.takePhoto();
-              setImage([
-                ...image,
-                {
-                  id: uuidv4(),
-                  image: photo,
-                  prediction: "TBD",
-                },
-              ]);
-              localStorage.setItem(
-                "results",
-                JSON.stringify([
+
+              const fileInput = dataURLtoFile(photo, "captured_image.jpg");
+
+              const formData = new FormData();
+              formData.append("file", fileInput);
+
+              const req = await fetch("http://localhost:8000/predict/", {
+                method: "POST",
+                body: formData,
+              });
+
+              const res = await req.json();
+
+              if (res) {
+                setImage([
                   ...image,
                   {
                     id: uuidv4(),
-                    image: photo,
-                    prediction: "TBD",
+                    image: URL.createObjectURL(fileInput),
+                    prediction: res.predicted_label || "TBD",
                   },
-                ])
-              );
+                ]);
+                localStorage.setItem(
+                  "results",
+                  JSON.stringify([
+                    ...image,
+                    {
+                      id: uuidv4(),
+                      image: URL.createObjectURL(fileInput),
+                      prediction: res.predicted_label || "TBD",
+                    },
+                  ])
+                );
+                setFile(null);
+              } else {
+                console.error("Error uploading image:", res.message);
+                setFile(null);
+              }
             }}
           >
-            <CameraLucide className="w-4 h-4" />
-            <span className="line-clamp-1 hidden md:inline">Take Photo</span>
+            <CameraLucide className="w-6 h-6" />
+            <span className="sr-only">Take Photo</span>
           </button>
           <button
             className="w-full bg-background/90 dark:bg-background/50 hover:bg-primary dark:hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors backdrop-blur-lg border border-border flex justify-center gap-3 items-center text-foreground rounded-md py-2 text-sm"
@@ -82,8 +110,71 @@ export default function CameraView() {
               cameraRef?.current?.switchCamera();
             }}
           >
-            <SwitchCamera className="w-4 h-4" />
-            <span className="line-clamp-1 hidden md:inline">Switch Camera</span>
+            <SwitchCamera className="w-6 h-6" />
+            <span className="sr-only">Switch Camera</span>
+          </button>
+          <input
+            type="file"
+            name="image_file"
+            id="image_file"
+            className="hidden"
+            ref={fileInputRef}
+            accept="image/*"
+            onChange={async (e) => {
+              const input = e.target.files?.[0];
+              if (input) {
+                setFile(input);
+
+                const formData = new FormData();
+                formData.append("file", input);
+
+                const req = await fetch("http://localhost:8000/predict/", {
+                  method: "POST",
+                  body: formData,
+                });
+
+                const res = await req.json();
+
+                if (res) {
+                  setImage([
+                    ...image,
+                    {
+                      id: uuidv4(),
+                      image: URL.createObjectURL(input),
+                      prediction: res.predicted_label || "TBD",
+                    },
+                  ]);
+                  localStorage.setItem(
+                    "results",
+                    JSON.stringify([
+                      ...image,
+                      {
+                        id: uuidv4(),
+                        image: URL.createObjectURL(input),
+                        prediction: res.predicted_label || "TBD",
+                      },
+                    ])
+                  );
+                  setFile(null);
+                } else {
+                  console.error("Error uploading image:", res.message);
+                  setFile(null);
+                }
+              }
+            }}
+          />
+          <button
+            className="w-full bg-background/90 dark:bg-background/50 hover:bg-primary dark:hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors backdrop-blur-lg border border-border flex justify-center gap-3 items-center text-foreground rounded-md py-2 text-sm"
+            onClick={() => {
+              // upload image logic
+              const inputFile = fileInputRef.current;
+              if (inputFile) {
+                inputFile.click();
+              }
+            }}
+          >
+            <FileUp className="w-6 h-6" />
+            <span className="sr-only">Upload Image</span>
           </button>
         </div>
       </div>
